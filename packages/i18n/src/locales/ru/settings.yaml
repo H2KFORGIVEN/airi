@@ -19,12 +19,8 @@ dialogs:
     baseUrlHelp: URL конечной точки API (оставьте по умолчанию, если не уверены)
     accountId: ID аккаунта
     validationSuccess: Успешная проверка конфигурации
-    validationPartial: Конфигурация частично проверена
     validationFailed: Проверка конфигурации не удалась
     validationError: 'Ошибка проверки: {error}'
-    testGeneration: Генерация тестов
-    testGenerationRunning: Тестирование...
-    testGenerationFailed: Сбой при генерации теста
     skipForNow: Пропустить на сейчас
     saveAndContinue: Сохранить и продолжить
     next: Далее

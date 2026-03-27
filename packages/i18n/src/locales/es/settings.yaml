@@ -19,12 +19,8 @@ dialogs:
     baseUrlHelp: URL del endpoint de la API (usa el predeterminado si no estás seguro)
     accountId: ID de Cuenta
     validationSuccess: La validación de la configuración fue exitosa
-    validationPartial: Configuración parcialmente Validada
     validationFailed: La validación de la configuración falló
     validationError: 'Error de validación: {error}'
-    testGeneration: Generación de pruebas
-    testGenerationRunning: Probando...
-    testGenerationFailed: Falló generación de prueba
     skipForNow: Omitir por ahora
     saveAndContinue: Guardar y Continuar
     next: Siguiente

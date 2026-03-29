@@ -123,9 +123,9 @@ const temporaryVrma = ref<string | null>(null)
 
 const vrmActiveAnimation = computed(() => {
   if (temporaryVrma.value && temporaryVrma.value in animations) {
-    return (animations as Record<string, URL>)[temporaryVrma.value].toString()
+    return (animations as Record<string, string>)[temporaryVrma.value]
   }
-  return animations.idleLoop.toString()
+  return animations.idleLoop
 })
 
 const emotionsQueue = createQueue<EmotionPayload>({

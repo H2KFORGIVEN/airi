@@ -22,6 +22,16 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Re-sign with ad-hoc identity
+        run: |
+          APP_PATH="apps/stage-tamagotchi/dist/mac-arm64/airi.app"
+          codesign --deep --force --sign - "$APP_PATH"
+          cd apps/stage-tamagotchi
+          node_modules/.bin/electron-builder --mac dmg --prepackaged "dist/mac-arm64/airi.app" --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload DMG
         uses: actions/upload-artifact@v4
         with:

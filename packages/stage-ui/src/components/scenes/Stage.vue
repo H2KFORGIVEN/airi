@@ -119,16 +119,33 @@ const speechRuntimeStore = useSpeechRuntimeStore()
 
 const { currentMotion } = storeToRefs(useLive2d())
 
+const temporaryVrma = ref<string | null>(null)
+
+const vrmActiveAnimation = computed(() => {
+  if (temporaryVrma.value && temporaryVrma.value in animations) {
+    return (animations as Record<string, URL>)[temporaryVrma.value].toString()
+  }
+  return animations.idleLoop.toString()
+})
+
 const emotionsQueue = createQueue<EmotionPayload>({
   handlers: [
     async (ctx) => {
       if (stageModelRenderer.value === 'vrm') {
-        // console.debug('VRM emotion anime: ', ctx.data)
+        const emotionName = ctx.data.name
+        const isVrma = emotionName in animations
+
+        if (isVrma) {
+          temporaryVrma.value = emotionName
+        }
+
         const value = EMOTION_VRMExpressionName_value[ctx.data.name]
         if (!value)
           return
 
-        await vrmViewerRef.value!.setExpression(value, ctx.data.intensity)
+        if (vrmViewerRef.value) {
+          await vrmViewerRef.value.setExpression(value, ctx.data.intensity)
+        }
       }
       else if (stageModelRenderer.value === 'live2d') {
         currentMotion.value = { group: EMOTION_EmotionMotionName_value[ctx.data.name] }
@@ -493,6 +510,12 @@ chatHookCleanups.push(onStreamEnd(async () => {
 chatHookCleanups.push(onAssistantResponseEnd(async (_message) => {
   currentChatIntent?.end()
   currentChatIntent = null
+
+  // Restore VRM animations to idle after the turn ends
+  if (stageModelRenderer.value === 'vrm') {
+    temporaryVrma.value = null
+  }
+
   // const res = await embed({
   //   ...transformersProvider.embed('Xenova/nomic-embed-text-v1'),
   //   input: message,
@@ -593,7 +616,7 @@ defineExpose({
         v-model:state="componentState"
         min-w="50% <lg:full" min-h="100 sm:100" h-full w-full flex-1
         :model-src="stageModelSelectedUrl"
-        :idle-animation="animations.idleLoop.toString()"
+        :idle-animation="vrmActiveAnimation"
         :paused="paused"
         :show-axes="stageViewControlsEnabled"
         :current-audio-source="currentAudioSource"

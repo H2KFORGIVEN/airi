@@ -18,7 +18,7 @@ export const useSettingsGeneral = defineStore('settings-general', () => {
 
     if (!language) {
       // Fallback to browser language
-      language = navigator.language || 'en'
+      language = navigator.language || 'zh-TW'
     }
 
     return resolveSupportedLocale(language, Object.keys(messages!))

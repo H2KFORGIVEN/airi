@@ -497,7 +497,7 @@ watch([stream, () => vadLoaded.value], async ([s, loaded]) => {
       </div>
     </div>
     <!-- Loading overlay sits on top, does not hide the stage -->
-    <div v-show="isLoading" class="absolute left-0 top-0 z-99 h-full w-full flex cursor-grab items-center justify-center overflow-hidden">
+    <div v-show="isLoading" class="pointer-events-none absolute left-0 top-0 z-99 h-full w-full flex cursor-grab items-center justify-center overflow-hidden">
       <div
         :class="[
           'absolute h-24 w-full overflow-hidden rounded-xl',

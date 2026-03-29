@@ -26,6 +26,14 @@ export default defineConfig({
         include: [
           'electron-click-drag-plugin',
         ],
+        exclude: [
+          '@moeru/eventa',
+          'picomatch',
+          'nanoid',
+          '@vueuse/core',
+          '@vueuse/shared',
+          'vue',
+        ],
       },
     },
     plugins: [

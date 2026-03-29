@@ -87,6 +87,8 @@ export default {
   asar: true,
   asarUnpack: [
     '**/*.node',
+    '**/node_modules/picomatch/**/*',
+    '**/node_modules/@moeru/eventa/**/*',
   ],
   extraMetadata: {
     name: 'ai.moeru.airi',

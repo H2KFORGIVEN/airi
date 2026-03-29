@@ -16,8 +16,8 @@ export const useSettingsGeneral = defineStore('settings-general', () => {
   function getLanguage() {
     let language = localStorage.getItem('settings/language')
 
-    // Default to zh-TW if not set or still using the old 'en' default
-    if (!language || language === 'en') {
+    // Default to zh-TW; override any non-Traditional Chinese setting
+    if (!language || language === 'en' || language === 'zh' || language === 'zh-CN' || language === 'zh-Hans') {
       language = 'zh-TW'
     }
 

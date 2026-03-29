@@ -28,19 +28,20 @@ export function useEmotionsMessageQueue(emotionsQueue: UseQueueReturn<EmotionPay
 
     const payloadText = match[1]
     try {
-      const payload = JSON.parse(payloadText) as { emotion?: unknown }
+      const payload = JSON.parse(payloadText) as { emotion?: unknown, animation?: unknown }
       const emotion = payload?.emotion
+      const animation = typeof payload?.animation === 'string' ? payload.animation : undefined
       if (typeof emotion === 'string') {
         const normalized = normalizeEmotionName(emotion)
         if (normalized)
-          return { ok: true, emotion: { name: normalized, intensity: 1 } }
+          return { ok: true, emotion: { name: normalized, intensity: 1, animation } }
       }
       else if (emotion && typeof emotion === 'object' && !Array.isArray(emotion)) {
         if ('name' in emotion && typeof (emotion as { name?: unknown }).name === 'string') {
           const normalized = normalizeEmotionName((emotion as { name: string }).name)
           if (normalized) {
             const intensity = normalizeIntensity((emotion as { intensity?: unknown }).intensity)
-            return { ok: true, emotion: { name: normalized, intensity } }
+            return { ok: true, emotion: { name: normalized, intensity, animation } }
           }
         }
       }

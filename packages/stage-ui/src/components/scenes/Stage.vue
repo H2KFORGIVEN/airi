@@ -133,10 +133,14 @@ const emotionsQueue = createQueue<EmotionPayload>({
     async (ctx) => {
       if (stageModelRenderer.value === 'vrm') {
         const emotionName = ctx.data.name
-        const isVrma = emotionName in animations
+        const animationName = ctx.data.animation
+        // Check animation field first, then emotion name itself
+        const vrmaKey = animationName && animationName in animations
+          ? animationName
+          : emotionName in animations ? emotionName : null
 
-        if (isVrma) {
-          temporaryVrma.value = emotionName
+        if (vrmaKey) {
+          temporaryVrma.value = vrmaKey
         }
 
         const value = EMOTION_VRMExpressionName_value[ctx.data.name]

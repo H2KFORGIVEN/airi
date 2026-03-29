@@ -49,4 +49,5 @@ export const EMOTION_VRMExpressionName_value = {
 export interface EmotionPayload {
   name: Emotion
   intensity: number
+  animation?: string
 }

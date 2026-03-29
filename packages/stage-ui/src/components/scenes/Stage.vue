@@ -134,6 +134,18 @@ const emotionsQueue = createQueue<EmotionPayload>({
       if (stageModelRenderer.value === 'vrm') {
         const emotionName = ctx.data.name
         const animationName = ctx.data.animation
+
+        // Neutral emotion: reset animation to idle and clear all expressions
+        if (emotionName === 'neutral') {
+          temporaryVrma.value = null
+          if (vrmViewerRef.value) {
+            const value = EMOTION_VRMExpressionName_value[ctx.data.name]
+            if (value)
+              await vrmViewerRef.value.setExpression(value, ctx.data.intensity)
+          }
+          return
+        }
+
         // Check animation field first, then emotion name itself
         const vrmaKey = animationName && animationName in animations
           ? animationName
